@@ -4,7 +4,7 @@ import './style.css';
 function Header() {
   return (
     <header>
-      
+      <h1>Spoiler App</h1>
     </header>
   );
 }

@@ -4,6 +4,8 @@ import { API } from 'aws-amplify';
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 import { listSpoilers } from '../../graphql/queries';
 import { createSpoiler as createSpoilerMutation, deleteSpoiler as deleteSpoilerMutation } from '../../graphql/mutations';
+import SpoilerCard from '../SpoilerCard';
+
 
 const initialFormState = { name: '', description: '' }
 
@@ -21,7 +23,13 @@ function Home() {
   }
 
   async function createSpoiler() {
-    console.log('fhgkjdh');
+    if (!formData.name || !formData.description) return;
+    await API.graphql({ query: createSpoilerMutation, variables: { input: formData } });
+    setSpoiler([ ...spoilers, formData ]);
+    setFormData(initialFormState);
+  }
+
+  async function replaySpoiler() {
     if (!formData.name || !formData.description) return;
     await API.graphql({ query: createSpoilerMutation, variables: { input: formData } });
     setSpoiler([ ...spoilers, formData ]);
@@ -35,37 +43,52 @@ function Home() {
   }
 
   return (
-    <div className="App">
-      <h1>Spoiler App</h1>
-      <input
-        onChange={e => setFormData({ ...formData, 'name': e.target.value})}
-        placeholder="Spoiler name"
-        value={formData.name}
-      />
-      <input
-        onChange={e => setFormData({ ...formData, 'email': e.target.value})}
-        placeholder="e-mail"
-        value={formData.email}
-      />
-      <input
-        onChange={e => setFormData({ ...formData, 'description': e.target.value})}
-        placeholder="Spoiler description"
-        value={formData.description}
-      />
-      <button onClick={createSpoiler}>Create Spoiler</button>
-      <div style={{marginBottom: 30}}>
-        {
-          spoilers.map(spoiler => (
-            <div key={spoiler.id || spoiler.name}>
-              <h2>{spoiler.name}</h2>
-              <h2>{spoiler.email}</h2>
-              <p>{spoiler.description}</p>
-              <button onClick={() => deleteSpoiler(spoiler)}>Delete spoiler</button>
+    <div className="home-page">
+        <div class="container">
+            <div class="comment">
+                <input
+                    aria-label={"name"}
+                    aria-required="true"
+                    onChange={e => setFormData({ ...formData, 'name': e.target.value})}
+                    placeholder="Name"
+                    class="textinput" 
+                    value={formData.name}
+                />
+                <input
+                    aria-label={"e-mail"}
+                    aria-required="true"
+                    class="textinput" 
+                    onChange={e => setFormData({ ...formData, 'email': e.target.value})}
+                    placeholder="e-mail"
+                    value={formData.email}
+                />
+                <textarea 
+                    aria-label={"Spoiler description"}
+                    aria-required="true"
+                    class="textinput" 
+                    onChange={e => setFormData({ ...formData, 'description': e.target.value})}
+                    placeholder="Spoiler description"
+                    value={formData.description}
+                />
+                <button 
+                    aria-label={"Create Spoiler"}
+                    onClick={createSpoiler}>
+                        Create Spoiler
+                </button>
             </div>
-          ))
-        }
-      </div>
-      <AmplifySignOut />
+            <div style={{marginBottom: 30}}>
+                {
+                    spoilers.map(spoiler => (
+                    <div key={spoiler.id}>
+                    <SpoilerCard spoiler={spoiler} 
+                        onBtnReplay={() => replaySpoiler(spoiler)}
+                        onBtnDelete={() => deleteSpoiler(spoiler)} />
+                    </div>
+                    ))
+                }
+            </div>
+        </div>
+        <AmplifySignOut />
     </div>
   );
 }

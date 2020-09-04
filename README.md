@@ -15,6 +15,17 @@ Install the Amplify CLI [here](https://docs.amplify.aws/cli/start/install#instal
 
 How to use AWS Serverless with React [See more](https://aws.amazon.com/pt/getting-started/hands-on/build-react-app-amplify-graphql/)
 
+## WCAG 2.1
+
+This code aplay the **WCAG**.
+
+**What is wcag2?**.
+Web Content Accessibility Guidelines (WCAG) 2.0 defines how to make Web content more accessible to people with disabilities. Accessibility involves a wide range of disabilities, including visual, auditory, physical, speech, cognitive, language, learning, and neurological disabilities.
+
+**Accessibility in React**
+
+React fully supports building accessible websites, often by using standard HTML techniques. [See More](https://reactjs.org/docs/accessibility.html)
+
 ## Getting Started
 
 Put your endpoint of the REST API of AMS in *src/aws-exports.js*
