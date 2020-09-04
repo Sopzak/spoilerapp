@@ -1,0 +1,7 @@
+{
+    "tableName": "spoileraws",
+    "partitionKeyName": "id",
+    "partitionKeyType": "N",
+    "sortKeyName": "name",
+    "sortKeyType": "S"
+}

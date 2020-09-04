@@ -1,0 +1,73 @@
+{
+    "paths": [
+        {
+            "name": "/items",
+            "lambdaFunction": "spoilerapp96c32952",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/GET"
+                ]
+            },
+            "policyResourceName": "/items"
+        },
+        {
+            "name": "/items",
+            "lambdaFunction": "spoilerappe9c355c3",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/GET"
+                ]
+            },
+            "policyResourceName": "/items"
+        }
+    ],
+    "resourceName": "sopileraws",
+    "apiName": "sopileraws",
+    "functionArns": [
+        {
+            "lambdaFunction": "spoilerapp96c32952"
+        },
+        {
+            "lambdaFunction": "spoilerappe9c355c3"
+        }
+    ],
+    "privacy": {
+        "auth": 2,
+        "unauth": 2,
+        "authRoleName": "amplify-spoilerapp-dev-100148-authRole",
+        "unAuthRoleName": "amplify-spoilerapp-dev-100148-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "spoilerapp96c32952",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        },
+        {
+            "category": "function",
+            "resourceName": "spoilerappe9c355c3",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}
