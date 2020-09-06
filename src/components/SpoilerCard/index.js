@@ -5,8 +5,7 @@ export default function SpoilerCard(props) {
     <div className="spoiler-container">
         <p>{props.spoiler.description}</p>
         <div >
-            Author: <p>{props.spoiler.name}</p>
-            contact: <p>{props.spoiler.email}</p>
+            Author: {props.spoiler.name} {props.spoiler.email}
         </div>
         <button onClick={() => props.onBtnReplay}>Replay</button>
         <button onClick={() => props.onBtnDelete}>Delete</button>

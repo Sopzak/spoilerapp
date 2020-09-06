@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
 import { API } from 'aws-amplify';
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import { listSpoilers } from '../../graphql/queries';
 import { createSpoiler as createSpoilerMutation, deleteSpoiler as deleteSpoilerMutation } from '../../graphql/mutations';
 import SpoilerCard from '../SpoilerCard';
@@ -12,6 +12,7 @@ const initialFormState = { name: '', description: '' }
 function Home() {
   const [spoilers, setSpoiler] = useState([]);
   const [formData, setFormData] = useState(initialFormState);
+  const [showModal, setStateModal] = useState("none");
 
   useEffect(() => {
     fetchSpoiler();
@@ -44,20 +45,26 @@ function Home() {
 
   return (
     <div className="home-page">
-        <div class="container">
-            <div class="comment">
+        <div className="container">
+            <div className="modal" style={{display: showModal}}>
+              <div className="modal-content">
+                <span 
+                  className="close" 
+                  onClick={() => {setStateModal("none");}}>
+                    &times;
+                </span>
                 <input
                     aria-label={"name"}
                     aria-required="true"
                     onChange={e => setFormData({ ...formData, 'name': e.target.value})}
                     placeholder="Name"
-                    class="textinput" 
+                    className="textinput" 
                     value={formData.name}
                 />
                 <input
                     aria-label={"e-mail"}
                     aria-required="true"
-                    class="textinput" 
+                    className="textinput" 
                     onChange={e => setFormData({ ...formData, 'email': e.target.value})}
                     placeholder="e-mail"
                     value={formData.email}
@@ -65,22 +72,29 @@ function Home() {
                 <textarea 
                     aria-label={"Spoiler description"}
                     aria-required="true"
-                    class="textinput" 
+                    className="textinput" 
                     onChange={e => setFormData({ ...formData, 'description': e.target.value})}
                     placeholder="Spoiler description"
                     value={formData.description}
                 />
                 <button 
+                    className="btn"
                     aria-label={"Create Spoiler"}
                     onClick={createSpoiler}>
                         Create Spoiler
                 </button>
+              </div>
             </div>
-            <div style={{marginBottom: 30}}>
+            <button 
+                aria-label={"Add Spoiler"}
+                onClick={() => {setStateModal("block");}}>
+                    Add Spoiler
+            </button>
+            <div style={{marginBottom: 30, maxHeight:'500px', minHeight: '300px', overflowY: 'scroll' }}>
                 {
                     spoilers.map(spoiler => (
                     <div key={spoiler.id}>
-                    <SpoilerCard spoiler={spoiler} 
+                      <SpoilerCard spoiler={spoiler} 
                         onBtnReplay={() => replaySpoiler(spoiler)}
                         onBtnDelete={() => deleteSpoiler(spoiler)} />
                     </div>
@@ -88,7 +102,6 @@ function Home() {
                 }
             </div>
         </div>
-        <AmplifySignOut />
     </div>
   );
 }
